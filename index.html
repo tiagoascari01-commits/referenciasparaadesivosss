@@ -352,5 +352,53 @@
     });
   });
 </script>
+
+<script>
+  // ===== SISTEMA DE PROTEÇÃO =====
+  (function(){
+    // 1. Bloquear clique direito
+    document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+
+    // 2. Bloquear atalhos de teclado
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'F12') { e.preventDefault(); }
+      if (e.ctrlKey && e.shiftKey && ['I','i','J','j','C','c'].includes(e.key)) { e.preventDefault(); }
+      if (e.ctrlKey && ['U','u'].includes(e.key)) { e.preventDefault(); }
+      if (e.ctrlKey && ['S','s'].includes(e.key)) { e.preventDefault(); }
+      if (e.ctrlKey && ['A','a'].includes(e.key)) { e.preventDefault(); }
+    });
+
+    // 3. Tela branca quando DevTools abrir
+    var threshold = 160;
+    var devtoolsOpen = false;
+    setInterval(function(){
+      var widthDiff = window.outerWidth - window.innerWidth > threshold;
+      var heightDiff = window.outerHeight - window.innerHeight > threshold;
+      if (widthDiff || heightDiff) {
+        if (!devtoolsOpen) {
+          devtoolsOpen = true;
+          document.body.innerHTML = '';
+          document.body.style.background = '#ffffff';
+        }
+      } else {
+        devtoolsOpen = false;
+      }
+    }, 500);
+
+    // 4. Bloquear seleção de texto
+    document.addEventListener('selectstart', function(e){ e.preventDefault(); });
+
+    // 5. Bloquear arrastar imagens
+    document.addEventListener('dragstart', function(e){ e.preventDefault(); });
+
+    // 6. Bloquear cópia de conteúdo
+    document.addEventListener('copy', function(e){ e.preventDefault(); });
+
+    // 7. CSS — desabilitar seleção visual
+    var style = document.createElement('style');
+    style.innerHTML = '* { -webkit-user-select: none !important; -moz-user-select: none !important; -ms-user-select: none !important; user-select: none !important; -webkit-user-drag: none !important; } img { pointer-events: none !important; -webkit-user-drag: none !important; }';
+    document.head.appendChild(style);
+  })();
+</script>
 </body>
 </html>
