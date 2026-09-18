@@ -424,5 +424,24 @@
     document.head.appendChild(style);
   })();
 </script>
+
+<script>
+  // Redireciona via window.location.href e repassa os parâmetros da URL (UTMs etc.) para a próxima página
+  (function(){
+    var params = window.location.search || '';
+    document.querySelectorAll('a[href^="http"]').forEach(function(a){
+      a.addEventListener('click', function(e){
+        e.preventDefault();
+        var base = a.getAttribute('href');
+        var qs = params;
+        if (qs) {
+          var sep = base.indexOf('?') > -1 ? '&' : '?';
+          base = base + sep + qs.substring(1);
+        }
+        window.location.href = base;
+      });
+    });
+  })();
+</script>
 </body>
 </html>
