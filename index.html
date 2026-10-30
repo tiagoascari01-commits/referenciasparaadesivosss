@@ -1,6 +1,6 @@
 <html lang="pt-BR"><head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>+100 Fichas para Produzir Adesivos Sem Erro</title>
 <meta name="description" content="Descubra quais materiais usar e como imprimir, cortar, aplicar e finalizar seus adesivos com aparência profissional — sem desperdiçar papel, vinil e tinta com testes que não funcionam.">
 <meta property="og:title" content="+100 Fichas para Produzir Adesivos Sem Erro">
@@ -472,5 +472,32 @@
   })();
 </script>
 
+<style>html{touch-action:pan-x pan-y;-ms-touch-action:pan-x pan-y;}</style>
+<script>
+(function(){
+  // bloquear pinça (iOS Safari)
+  ['gesturestart','gesturechange','gestureend'].forEach(function(ev){
+    document.addEventListener(ev,function(e){e.preventDefault();},{passive:false});
+  });
+  // bloquear zoom por dois dedos
+  document.addEventListener('touchmove',function(e){
+    if(e.touches && e.touches.length>1){e.preventDefault();}
+  },{passive:false});
+  // bloquear duplo-toque pra dar zoom
+  var lastTouch=0;
+  document.addEventListener('touchend',function(e){
+    var now=Date.now();
+    if(now-lastTouch<=350){e.preventDefault();}
+    lastTouch=now;
+  },{passive:false});
+  // bloquear zoom por Ctrl + scroll e Ctrl +/-/0 (desktop)
+  window.addEventListener('wheel',function(e){
+    if(e.ctrlKey){e.preventDefault();}
+  },{passive:false});
+  window.addEventListener('keydown',function(e){
+    if((e.ctrlKey||e.metaKey) && ['+','-','=','0'].indexOf(e.key)!==-1){e.preventDefault();}
+  },{passive:false});
+})();
+</script>
 
 </body></html>
